@@ -24,6 +24,7 @@ export const AuthContext = createContext();
 export const AuthProvider = (props) => {
   const [initial, setInitial] = useState(true);
   const [session, setSession] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const [user, setUser] = useState(null);
   const [view, setView] = useState(VIEWS.SIGN_IN);
   const router = useRouter();
@@ -34,6 +35,11 @@ export const AuthProvider = (props) => {
       const {
         data: { session: activeSession },
       } = await supabase.auth.getSession();
+      const { data } = await supabase
+        .from('resumes')
+        .select()
+        .eq('user_id', activeSession?.user?.id);
+      setUserInfo(data);
       setSession(activeSession);
       setUser(activeSession?.user ?? null);
       setInitial(false);
@@ -73,11 +79,12 @@ export const AuthProvider = (props) => {
       initial,
       session,
       user,
+      userInfo,
       view,
       setView,
       signOut: () => supabase.auth.signOut(),
     };
-  }, [initial, session, user, view]);
+  }, [initial, session, user, userInfo, view]);
 
   return <AuthContext.Provider value={value} {...rest} />;
 };
