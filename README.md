@@ -1,5 +1,6 @@
 <h1 align="center"><b>Next.js</b> + <b>Supabase</b> + <b>Node</b></h1>
-
+<h2>To run:</h2>
+<code>cd pupserver && npm install && cd .. && cd next-app && npm install && npm run dev</code>
 ## Overview
 
 ## Inspiration
@@ -30,3 +31,4 @@ What we learned and is not shown in project:
 [x] In-depth Automated Browser bot anti-detection
 ## What's next for CareersGPT
 Handle all variants of easy submits (some require to make you pick options instead of one click), protect against bot detection and apply on 3rd party websites!
+
