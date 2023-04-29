@@ -3,6 +3,7 @@
 <code>cd pupserver && npm install && cd .. && cd next-app && npm install && npm run dev</code>
 
 ## Overview
+Fully automated job applying service, with capability to render its own Puppeteer automated browser scripts and input your data on 3rd part application websites.
 
 ## Inspiration
 A fully automated job applying service
