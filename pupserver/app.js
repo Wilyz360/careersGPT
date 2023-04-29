@@ -154,7 +154,7 @@ app.get('/post', (req, res) => {
         continue;
       }
       const applyButtonSelector = await page.waitForSelector(
-        'button[class="jobs-apply-button artdeco-button artdeco-button--3 artdeco-button--primary ember-view"]'
+        'button[class="jobs-apply-button artdeco-button artdeco-button--3 artdeco-button--primary ember-view"]',
         { visible: true }
       );
       if (!applyButtonSelector) {
