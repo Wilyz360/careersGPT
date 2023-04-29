@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import Router from 'next/router';
 
 import Auth from 'src/components/Auth';
 import { useAuth, VIEWS } from 'src/components/AuthProvider';
@@ -13,22 +15,24 @@ export default function Home() {
 
   const [resume, setResume] = useState(null);
   const [shortStory, setShortStory] = useState('');
+  const router = useRouter();
 
   const areBothFieldsFilled = (story, file) => {
     return !story || !file;
   };
 
   const handleSubmit = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('resumes')
-        .update({ resume_info: resume, short_story: shortStory })
-        .eq('user_id', user?.id);
-      if (error) throw error;
-      if (data) console.log(data);
-    } catch (error) {
-      alert(error.message);
-    }
+    const { error } = await supabase
+      .from('resumes')
+      .insert({ resume_info: resume, short_story: shortStory, user_id: user?.id })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status === 201) {
+          console.log('success');
+        }
+      });
+    if (error) throw error;
+    console.log(error);
   };
 
   const handleStoryChange = (e) => {
@@ -55,46 +59,54 @@ export default function Home() {
     return <Auth view={view} />;
   }
 
-  if (
-    user &&
-    userInfo[0].resume_info.length === 0 &&
-    userInfo[0].short_story.length === 0
-  ) {
+  if (user) {
     return (
       <div className="w-full">
-        <pre>{JSON.stringify(user?.id)}</pre>
-        <div className="m-10 flex flex-col">
-          <p className="highlight">
-            {' '}
-            We need your resume and a short story. Please update empty fields:{' '}
-          </p>
-          <p>user inside isData component:</p>
-          <pre>{JSON.stringify(user)}</pre>
-          <label htmlFor="shortStory">Short Story:</label>
-          <textarea rows={10} type="text" id="shortStory" onChange={handleStoryChange} />
-          <label htmlFor="resume">Upload resume:</label>
-          <textarea id="resume" type="text" onChange={handleResumeChange} cols={10} />
-          <button
-            className="p-2 ring-1 ring-black disabled:opacity-20"
-            disabled={areBothFieldsFilled(shortStory, resume)}
-            type="submit"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
-        </div>
-        <p className="m-2 bg-black p-2 text-white">{userInfo[0].resume_info}</p>
-        <p className="m-2 bg-black p-2 text-white">{userInfo[0].short_story}</p>
-        <div className="flex flex-col">
-          <h2>Welcome!</h2>
-          <code className="highlight">{user.role}</code>
-          <Link className="button" href="/profile">
-            Go to Profile
-          </Link>
-          <button type="button" className="button-inverse" onClick={signOut}>
-            Sign Out
-          </button>
-        </div>
+        {!userInfo[0] ? (
+          <form onSubmit={handleSubmit} className="flex flex-col">
+            <p className="highlight">
+              We need your resume and a short story. This will help GPT to make more
+              human-like cover letters. <br />
+              Please update empty fields:
+            </p>
+            <pre>{JSON.stringify(user)}</pre>
+
+            <label htmlFor="shortStory">Short Story:</label>
+            <textarea
+              rows={10}
+              type="text"
+              id="shortStory"
+              onChange={handleStoryChange}
+            />
+            <label htmlFor="resume">Upload resume:</label>
+            <textarea id="resume" type="text" onChange={handleResumeChange} cols={10} />
+            <input
+              className="p-2 ring-1 ring-black disabled:opacity-20"
+              disabled={areBothFieldsFilled(shortStory, resume)}
+              type="submit"
+            />
+          </form>
+        ) : (
+          <>
+            <h2>You are ready to use CareersGPT!</h2>
+            {userInfo[0] && (
+              <div className="flex w-full flex-col items-center">
+                <p className="m-2 w-[50%] bg-black p-2 text-white">
+                  {userInfo[0].resume_info}
+                </p>
+                <p className="m-2 w-[50%] bg-black p-2 text-white">
+                  {userInfo[0].short_story}
+                </p>
+              </div>
+            )}
+          </>
+        )}
+        <Link className="button" href="/profile">
+          Go to Profile
+        </Link>
+        <button type="button" className="button-inverse" onClick={signOut}>
+          Sign Out
+        </button>
       </div>
     );
   }
