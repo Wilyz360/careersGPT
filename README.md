@@ -1,6 +1,7 @@
 <h1 align="center"><b>Next.js</b> + <b>Supabase</b> + <b>Node</b></h1>
 <h2>To run:</h2>
 <code>cd pupserver && npm install && cd .. && cd next-app && npm install && npm run dev</code>
+
 ## Overview
 
 ## Inspiration
