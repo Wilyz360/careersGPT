@@ -69,11 +69,11 @@ app.get('/post', (req, res) => {
     const email = await page.$x(
       '/html/body/main/section[1]/div/div/form[1]/div[1]/div[1]/div/div/input'
     );
-    await email[0].type('wojdafilip@gmail.com');
+    await email[0].type('wojdafilipdev@gmail.com');
     const password = await page.$x(
       '/html/body/main/section[1]/div/div/form[1]/div[1]/div[2]/div/div/input'
     );
-    await password[0].type('f3rQshcU!!!');
+    await password[0].type('3aldrhb2!!!');
     await page.keyboard.press('Enter');
 
     const searchInput = await page.waitForSelector(
