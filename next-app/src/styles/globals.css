@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h2 {
+    @apply py-4 text-4xl font-black text-gray-800;
+  }
+
+  .button {
+    @apply custom-focus rounded-full border-[1px] border-purple-400 bg-white px-8 py-2 font-bold text-purple-400 duration-300 hover:bg-purple-400 hover:text-white focus:bg-purple-400 focus:text-white;
+  }
+
+  .button-inverse {
+    @apply custom-focus rounded-full border-[1px] border-white bg-purple-400 px-8 py-2 font-bold text-white duration-300 hover:border-purple-400 hover:bg-white hover:text-purple-400 focus:border-purple-400 focus:bg-white focus:text-purple-400;
+  }
+
+  .card {
+    @apply column min-w-[20rem] items-center gap-8 rounded-2xl bg-white px-4 py-8 shadow-md sm:min-w-[24rem] sm:px-10;
+  }
+
+  .column {
+    @apply flex flex-col items-start justify-center gap-4;
+  }
+
+  .custom-focus {
+    @apply focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2;
+  }
+
+  .heading {
+    @apply text-lg font-semibold text-gray-700;
+  }
+
+  .highlight {
+    @apply ml-1 rounded-lg bg-gray-100 p-2 font-mono;
+  }
+
+  .error {
+    @apply w-full text-center text-red-600;
+  }
+
+  .input {
+    @apply custom-focus w-full rounded-xl border border-slate-300 focus:shadow-none;
+  }
+
+  .link {
+    @apply custom-focus rounded-md font-semibold text-purple-400;
+  }
+
+  .row {
+    @apply flex flex-row items-center justify-start gap-1;
+  }
+}
