@@ -1,27 +1,32 @@
-<h1 align="center"><b>Next.js</b> + <b>Supabase</b> Auth</h1>
-
-<p align="center">
-  <a href="https://github.com/mryechkin/nextjs-supabase-auth/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/mryechkin/nextjs-supabase-auth?style=for-the-badge" alt="GitHub" />
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://www.misha.wtf/_next/image?url=%2Fblog%2Fsupabase-auth-next-13%2Fcover.png&w=640&q=100" alt="Banner image" />
-</p>
+<h1 align="center"><b>Next.js</b> + <b>Supabase</b> + <b>Node</b></h1>
 
 ## Overview
 
-Sample project showing how to add authentication to [Next.js](https://nextjs.org/) 13+ using [Supabase](https://www.supabase.io/) **Auth** and the new (beta) [`app` directory](https://beta.nextjs.org/docs/app-directory-roadmap).
+## Inspiration
+A fully automated job applying service
+## What it does
+Only apply to Easy Apply's for now, assuming that a user has previously supplied a resume to their LinkedIn. 
+Current version using a fresh and empty LinkedIn account, unable to take user's credentials.
 
-This project is a supplement to [this guide](https://www.misha.wtf/blog/supabase-auth-next-13). See the link for a detailed tutorial.
+The plan was to detect if it's an Easy Apply and apply. If it's not, scrape the link that will lead us to a 3rd party website, download the HTML, process it so that it does not have too much text, for example deleting useless (for the automated browser) <script>, <body>, <head> tags,. etc. and ask ChatGPT 4 API an accurate prompt: 
 
-## Author
+"for this {html}, write a Puppeteer script that uses accurate CSS selectors and input the user's data into correct fields: {user_data}, if cover letter field exists, write a cover letter using {resume} and {short_story} (earlier supplied by user, to prevent sounding soulless and emphasize user's strengths). STRICTLY RETURN THE PUPPETEER CODE WITH DESIRED INFORMATION."
 
-[Mykhaylo Ryechkin](https://github.com/mryechkin)
+This API call would return a Puppeteer script, that we could simply extract and execute inside our Node server like this: exec(script)
+## How we built it
 
-<a href="https://www.buymeacoffee.com/mryechkin" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+## Challenges we ran into
+Glassdoor and Indeed's heavy bot detection and combat with captchas, dynamic CSS classes. The transition to LinkedIn was made at 3am on the day of submissions.
+## Accomplishments that we're proud of
+Undetected by LinkedIn
+## What we learned
+Running a website and a dedicated node server on one machine, 
+What we learned and is not shown in project:
+[x] Executing code from API calls (not in submission)
+[x] Very accurate Chat GPT prompts
+[x] New, experimental NextJS 13 'app' folder with server components
+[x] Safe credentials handling in server/client components
+[x] In-depth Puppeteer library tricks
+[x] In-depth Automated Browser bot anti-detection
+## What's next for CareersGPT
+Handle all variants of easy submits (some require to make you pick options instead of one click), protect against bot detection and apply on 3rd party websites!
